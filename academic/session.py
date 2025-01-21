@@ -2,6 +2,8 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 import time
 
+SESSION_STATES = [('draft','Draft'),('confirmed','Confirmed'),('done','Done')]
+
 class Session(models.Model):
     _name = 'academic.session'
 
@@ -16,6 +18,18 @@ class Session(models.Model):
     attendee_ids    = fields.One2many(comodel_name='academic.attendee', inverse_name='session_id', string='Attendees')
 
     taken_seats     = fields.Float(string='Taken Seats', compute='_calc_taken_seats')
+    image_small     = fields.Binary(string='Image Small')
+
+    state           = fields.Selection(string='State', selection=SESSION_STATES, required=True, readonly=True, default=SESSION_STATES[0][0])
+
+    def action_draft(self):
+        self.state = SESSION_STATES[0][0]
+
+    def action_confirmed(self):
+        self.state = SESSION_STATES[1][0]
+
+    def action_done(self):
+        self.state = SESSION_STATES[2][0]
 
     def _calc_taken_seats(self):
         for rec in self:
@@ -47,3 +61,19 @@ class Session(models.Model):
         default = dict(default or {},
             name=_('Copy of %s') % self.name)
         return super(Session, self).copy(default)
+    
+    def open_wizard(self):
+        view    = self.env.ref('academic.create_attendee_form_view')
+        wizard  = self.env['academic.create.attendee.wizard'].create({'session_id': self.id})
+        return {
+            'name': _('Add Attendee'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'academic.create.attendee.wizard',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'res_id': wizard.id,
+            'context': self.env.context,
+        }

@@ -2,7 +2,7 @@
     'name': 'Academic Information System v1.0',
     'version': '1.0',
     'author': 'Alif Hafidz',
-    'depends': ['base'],
+    'depends': ['base','account','sale','board',],
     'category': 'Education',
     'website': 'https://github.com/alifhafidz/academic-information-system',
     'description': """
@@ -16,6 +16,9 @@
         'attendee.xml',
         'partner.xml',
         'wizard/create_attendee.xml',
+        'security/group.xml',
+        'report/session.xml',
+        'dashboard.xml',
     ],
     'installable': True,
     'auto_install': False,

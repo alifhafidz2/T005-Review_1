@@ -1,0 +1,70 @@
+<odoo>
+    <data>
+
+        <!-- Action Session -->
+        <record id="act_session_calendar" model="ir.actions.act_window">
+            <field name="name">academic.session.cal</field>
+            <field name="res_model">academic.session</field>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="session_cal"/>
+        </record>
+
+        <!-- Action Session -->
+        <record id="act_session_graph" model="ir.actions.act_window">
+            <field name="name">academic.session.graph</field>
+            <field name="res_model">academic.session</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="session_graph"/>
+        </record>
+
+        <!-- Action Course -->
+        <record id="act_course_list" model="ir.actions.act_window">
+            <field name="name">academic.course.list</field>
+            <field name="res_model">academic.course</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Definisi Dashboard -->
+        <record id="board_session_form" model="ir.ui.view">
+            <field name="name">Session Dashboard Form</field>
+            <field name="model">board.board</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Session Dashboard">
+                    <board style="2-1">
+                        <column>
+                            <action string="Attendees by Course" name="%(act_session_graph)d"
+                                colspan="4" height="150" width="510"/>
+                            <action string="Sessions" name="%(act_session_calendar)d" colspan="4"/>
+                        </column>
+                        <column>
+                            <action string="Courses" name="%(act_course_list)d" colspan="4"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action Window -->
+        <record id="open_board_session" model="ir.actions.act_window">
+            <field name="name">Session Dashboard</field>
+            <field name="res_model">board.board</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="board_session_form"/>
+        </record>
+
+        <!-- Tambah menu Dashboard -->
+        <menuitem id="menu_dashboard"
+            name="Dashboard"
+            parent="academic_0"
+            sequence="0"/>
+
+        <!-- Tambah sub menu -->
+        <menuitem id="menu_dashboard_session"
+            name="Session Dashboard"
+            parent="menu_dashboard"
+            action="open_board_session"
+            sequence="1"/>
+
+    </data>
+</odoo>

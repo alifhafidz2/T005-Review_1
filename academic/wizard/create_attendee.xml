@@ -25,6 +25,18 @@
             </field>
         </record>
 
+        <record id="open_wizard_action_server" model="ir.actions.server">
+            <field name="name">Add Attendees</field>
+            <field name="model_id" ref="academic.model_academic_session"/>
+            <field name="binding_model_id" ref="academic.model_academic_session"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.open_wizard()
+            </field>
+        </record>
+
         <menuitem id="create_attendee_wizard_menu"
             name="Add Attendee"
             parent="academic_1"

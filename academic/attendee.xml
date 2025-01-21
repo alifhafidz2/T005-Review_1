@@ -14,5 +14,23 @@
                 </tree>
             </field>
         </record>
+
+        <!-- Search View -->
+        <record id="attendee_search" model="ir.ui.view">
+            <field name="name">attendee_search</field>
+            <field name="model">academic.attendee</field>
+            <field name="arch" type="xml">
+                <search string="Search Attendee">
+                    <field name="session_id"/>
+                    <field name="name"/>
+                    <group string="Group By...">
+                        <filter name="course_search" string="Course" icon="terp-personal" domain="[]" context="{'group_by':'course_id'}"/>
+                        <filter name="session_search" string="Session" icon="terp-personal" domain="[]" context="{'group_by':'session_id'}"/>
+                        <filter name="partner_search" string="Partner" icon="terp-personal" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
     </data>
 </odoo>
