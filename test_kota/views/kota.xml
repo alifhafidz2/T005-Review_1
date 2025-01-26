@@ -1,0 +1,36 @@
+<odoo>
+  <data>
+
+    <record id="vit_kota_view_tree" model="ir.ui.view">
+      <field name="name">vit_kota_tree</field>
+      <field name="model">vit.kota</field>
+      <field name="arch" type="xml">
+        <tree string="Kota">
+          <field name="name"/>
+          <field name="state_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="vit_kota_view_form" model="ir.ui.view">
+      <field name="name">vit_kota_form</field>
+      <field name="model">vit.kota</field>
+      <field name="arch" type="xml">
+        <form string="Kota">
+          <field name="name"/>
+          <field name="state_id"/>
+        </form>
+      </field>
+    </record>
+
+    <record id="vit_kota_action_window" model="ir.actions.act_window">
+      <field name="name">Kota</field>
+      <field name="res_model">vit.kota</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="vit_kota_menu_list" 
+      name="Kota" parent="contacts.res_partner_menu_config" action="vit_kota_action_window"/>
+
+  </data>
+</odoo>
