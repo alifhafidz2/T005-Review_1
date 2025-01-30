@@ -1,0 +1,159 @@
+<odoo>
+    <data>
+        <template id="test_partner_card.report_customer_card_document">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context({'lang': lang})"/>
+                <div class="page">
+                    <!-- Nama Customer -->
+                    <h2>
+                        Name: <span t-field="doc.name"/>
+                    </h2>
+
+                    <!-- Table Informasi Customer -->
+                    <div class="row mt32 mb32">
+                        <table class="table table-bordered">
+                            <!-- Table Header -->
+                            <thead>
+                                <tr>
+                                    <th>Address</th>
+                                    <th>Email / Website</th>
+                                    <th>Phone / Notes</th>
+                                </tr>
+                            </thead>
+                            <!-- Table Body -->
+                            <tbody>
+                                <tr>
+                                    <!-- Address -->
+                                    <td>
+                                        <span t-field="doc.street"/><br/>
+                                        <span t-field="doc.street2"/><br/>
+                                        <span t-field="doc.city"/>, <span t-field="doc.state_id"/><br/>
+                                        <span t-field="doc.zip"/><br/>
+                                        <span t-field="doc.country_id.name"/>
+                                    </td>
+                                    <!-- Email / Website -->
+                                    <td>
+                                        <span t-field="doc.email"/><br/>
+                                        <span t-field="doc.website"/><br/>
+                                    </td>
+                                    <!-- Phone / Notes -->
+                                    <td>
+                                        <span t-field="doc.phone"/><br/>
+                                        Notes: <span t-field="doc.comment"/><br/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Related Contacts -->
+                    <div class="row mt32">
+                        <h3>Related Contacts</h3>
+                    </div>
+
+                    <div class="row mt32">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.child_ids" t-as="child">
+                                    <tr>
+                                        <td>
+                                            <span t-field="child.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="child.email"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="child.phone"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Bank Account -->
+                    <div class="row mt32">
+                        <h3>Bank Account</h3>
+                    </div>
+
+                    <div class="row mt32">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Bank</th>
+                                    <th>Account Number</th>
+                                    <th>Account Holder</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.bank_account_ids" t-as="account">
+                                    <tr>
+                                        <td><span t-field="account.bank_id.name"/></td>
+                                        <td><span t-field="account.acc_number"/></td>
+                                        <td><span t-field="account.partner_id.name"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Invoice -->
+                    <div class="row mt32">
+                        <h3>Invoice</h3>
+                    </div>
+
+                    <div class="row mt32">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Due</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.invoice_ids" t-as="inv">
+                                    <tr>
+                                        <td><span t-field="inv.name"/></td>
+                                        <td><span t-field="inv.invoice_date"/></td>
+                                        <td><span t-field="inv.amount_total_signed"/></td>
+                                        <td><span t-field="inv.amount_residual_signed"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </t>
+        </template>
+
+        <template id="test_partner_card.report_customer_card">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-set="lang" t-value="doc.create_uid.lang"/>
+                    <t t-call="test_partner_card.report_customer_card_document"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_report_customer_card" model="ir.actions.report">
+            <field name="name">Customer Card</field>
+            <field name="model">res.partner</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">test_partner_card.report_customer_card</field>
+            <field name="report_file">test_partner_card.report_customer_card</field>
+            <field name="print_report_name">object.name</field>
+            <field name="binding_model_id" ref="base.model_res_partner"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
