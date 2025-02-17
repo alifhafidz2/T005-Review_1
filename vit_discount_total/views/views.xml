@@ -1,0 +1,58 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="vit_discount_total">
+      <field name="name">vit_discount_total</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='tax_totals']" position="before">
+          <field name="discount_total"/>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="vit_discount_total.action_window">
+      <field name="name">vit_discount_total window</field>
+      <field name="res_model">vit_discount_total.vit_discount_total</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="vit_discount_total.action_server">
+      <field name="name">vit_discount_total server</field>
+      <field name="model_id" ref="model_vit_discount_total_vit_discount_total"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="vit_discount_total" id="vit_discount_total.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="vit_discount_total.menu_1" parent="vit_discount_total.menu_root"/>
+    <menuitem name="Menu 2" id="vit_discount_total.menu_2" parent="vit_discount_total.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="vit_discount_total.menu_1_list" parent="vit_discount_total.menu_1"
+              action="vit_discount_total.action_window"/>
+    <menuitem name="Server to list" id="vit_discount_total" parent="vit_discount_total.menu_2"
+              action="vit_discount_total.action_server"/>
+-->
+  </data>
+</odoo>
